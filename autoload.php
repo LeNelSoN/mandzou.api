@@ -1,11 +1,13 @@
-<?php 
-class Autoload{
+<?php
 
-    static function register(){
-        spl_autoload_register(array(__CLASS__, 'autoload'));
+function autoload($className) {
+    $classPath = "src\\$className.php";
+    if (file_exists($classPath)) {
+        require_once $classPath;
     }
-
-    static function autoload($class){
-        require $class . '.php';
-    }
+    // $toolsPath = lcfirst($className).".php";
+    // if (file_exists($toolsPath)) {
+    //     require_once $toolsPath;
+    // }
 }
+spl_autoload_register("autoload");
