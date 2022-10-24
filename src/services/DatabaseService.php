@@ -51,7 +51,15 @@ return (object)['result' => $result, 'statment' => $statment];
 * Retourne la liste des tables en base de données sous forme de tableau
 */
 public static function getTables() : array
-{
-//...
-}
+    {
+        $dbs = new DatabaseService("");
+        $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = ?";       
+        $resp = $dbs->query($sql, ['db_shop_cuisine']);
+        
+        // echo json_encode($resp);
+        // CONSOLE.LOG les datas !
+        
+        $tables = $resp->statment->fetchAll(PDO::FETCH_COLUMN);
+        return $tables;
+    } 
 }
