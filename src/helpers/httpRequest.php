@@ -17,7 +17,7 @@ class HttpRequest{
             filter_var(trim($_SERVER["REQUEST_URI"], '/'), FILTER_SANITIZE_URL);
         $requestArray = explode('/', $request);
         $this->method = array_shift($requestArray);
-        if($_ENV['env'] == 'dev' && $_SERVER['HTTP_HOST'] == 'localhost'){
+        if($_ENV['current'] == 'dev' && $_SERVER['HTTP_HOST'] == 'localhost'){
             array_shift($requestArray);
         }
         $this->route = $requestArray;

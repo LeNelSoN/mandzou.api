@@ -18,13 +18,13 @@ class DatabaseService
     private function connect () : PDO
     {
         if ( self :: $connection == null ) {
-            $dbConfig = $_ENV [ 'db' ];
-            $host = $dbConfig [ "host" ];
-            $port = $dbConfig [ "port" ];
-            $dbName = $dbConfig [ "dbName" ];
-            $dsn = "mysql:host= $host ;port= $port ;dbname= $dbName " ;
-            $user = $dbConfig [ "user" ];
-            $pass = $dbConfig [ "pass" ];
+            $dbConfig = $_ENV [ 'config' ]->db;
+            $host = $dbConfig ->host;
+            $port = $dbConfig ->port;
+            $dbName = $dbConfig->dbName;
+            $dsn = "mysql:host=$host;port=$port;dbname=$dbName" ;
+            $user = $dbConfig->user;
+            $pass = $dbConfig->pass;
             try {
                 $dbConnection = new PDO (
                 $dsn ,

@@ -6,7 +6,7 @@ use Helpers\HttpResponse;
 use Services\DatabaseService;
 
     $_ENV["current"] = "dev"; 
-    $config = file_get_contents("configs/".$_ENV["current"].".config.json");
+    $config = file_get_contents("src/configs/".$_ENV["current"].".config.json");
     $_ENV['config'] = json_decode($config);
 
     if($_ENV["current"] == "dev"){
