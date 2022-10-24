@@ -54,7 +54,7 @@ public static function getTables() : array
     {
         $dbs = new DatabaseService("");
         $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = ?";       
-        $resp = $dbs->query($sql, ['db_shop_cuisine']);
+        $resp = $dbs->query($sql, ['db_blog']);
         
         // echo json_encode($resp);
         // CONSOLE.LOG les datas !
