@@ -6,6 +6,6 @@ class Autoload{
     }
 
     static function autoloader($class){
-        require 'src/' .$class . '.php';
+        require 'src/'.$class.'.php';
     }
 }
