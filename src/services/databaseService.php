@@ -60,4 +60,19 @@ $e->getMessage()");
         $tables = $resp->statment->fetchAll(PDO::FETCH_COLUMN);
         return $tables;    
     }
+    /**
+     * Retourne les lignes correspondant à la condition where
+     */
+    public function selectWhere(string $where = "1", array $bind = [], bool $is_deleted = false): array
+    {
+        if($where != "1"){
+            $where = $where.'=?';
+        }
+        $sql = "SELECT * FROM $this->table WHERE $where AND is_deleted = ?;";
+        array_push($bind, $is_deleted);
+        $resp = $this->query($sql, $bind );
+        $rows = $resp->statment->fetchAll(PDO::FETCH_CLASS);
+        return $rows;
+    }
+
 }
