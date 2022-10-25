@@ -2,18 +2,28 @@
 
 namespace Tools;
 
-use ErrorException;
+
 use Services\DatabaseService;
 use Helpers\HttpRequest;
 use Exception;
-
+use Helpers\HttpResponse;
 
 class Initializer
 {
+    /**
+     * Génère la classe Schemas\Table (crée le fichier)
+     * qui liste toutes les tables en base de données
+     * sous forme de constante
+     * Renvoie la liste des tables sous forme de tableau
+     * Si $isForce vaut false et que la classe existe déjà, elle n'est pas réécrite
+     * Si $isForce vaut true, la classe est supprimée (si elle existe) et réécrite
+     */
+
     private static function writeTableFile(bool $isForce = false): array
     {
         $tables = DatabaseService::getTables();
         $tableFile = "src/schemas/Table.php";
+
         if (file_exists($tableFile) && $isForce) {
             //???
             //Supprimer le fichier s’il existe
@@ -38,6 +48,7 @@ class Initializer
             }
             return $tables;
         }
+
     }
     /**
      * Exécute la méthode writeTableFile
@@ -47,7 +58,9 @@ class Initializer
     {
         $isForce = count($request->route) > 1 && $request->route[1] == 'force';
         try {
+
             self::writeTableFile($isForce); //when the function is inside "SELF"
+
         } catch (Exception $e) {
             return false;
         }

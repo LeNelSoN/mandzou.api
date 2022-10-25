@@ -23,6 +23,7 @@ Autoload::register();
 
 
 
+
 if (
     $_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] ==
     'init'
@@ -35,6 +36,17 @@ if (
 
 
 $request = HttpRequest::instance();
+
+if (
+    $_ENV['current'] == 'dev' && !empty($request->route) && $request->route[0] ==
+    'init'
+) {
+    if (Initializer::start($request)) {
+        HttpResponse::send(["message" => "Api Initialized"]);
+    }
+    HttpResponse::send(["message" => "Api Not Initialized, try again ..."]);
+}
+
 $tables = DatabaseService::getTables();
 if (empty($request->route) || !in_array($request->route[0], $tables)) {
     HttpResponse::exit();
