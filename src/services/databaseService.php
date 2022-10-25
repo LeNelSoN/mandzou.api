@@ -58,20 +58,31 @@ $e->getMessage()");
         $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = ?";
         $resp = $dbs->query($sql, [$_ENV['config']->db->dbName]);
         $tables = $resp->statment->fetchAll(PDO::FETCH_COLUMN);
-        return $tables;    
+        return $tables;
     }
     /**
      * Retourne les lignes correspondant à la condition where
      */
     public function selectWhere(string $where = "1", array $bind = [], bool $is_deleted = false): array
     {
-        if($where != "1"){
-            $where = $where.'=?';
+        if ($where != "1") {
+            $where = $where . '=?';
         }
         $sql = "SELECT * FROM $this->table WHERE $where AND is_deleted = ?;";
         array_push($bind, $is_deleted);
-        $resp = $this->query($sql, $bind );
+        $resp = $this->query($sql, $bind);
         $rows = $resp->statment->fetchAll(PDO::FETCH_CLASS);
         return $rows;
+    }
+    /**
+     * Retourne la liste des colonnes d'une table (son schéma)
+     */
+    public function getSchema()
+    {
+        $schemas = [];
+        $sql = "SHOW FULL COLUMNS FROM $this->table";
+        $resp = $this->query($sql);
+        $schemas = $resp->statment->fetchAll(PDO::FETCH_CLASS);
+        return $schemas;
     }
 }
