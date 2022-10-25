@@ -6,6 +6,13 @@ class Autoload{
     }
 
     static function autoloader($class){
-        require 'src/'.$class.'.php';
+        $classPath = 'src/'.$class.'.php';
+        if(file_exists($classPath)){
+            require $classPath;
+        }
+        $toolsPath = lcfirst($class).".php";
+        if (file_exists($toolsPath)) {
+            require $toolsPath;
+        }
     }
 }
