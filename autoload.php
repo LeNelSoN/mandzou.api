@@ -6,7 +6,7 @@ class Autoload{
     }
 
     static function autoloader($class){
-        $classPath = 'src/'.$class.'.php';
+        $classPath = $_ENV['config']->db->root.$class.'.php';
         if(file_exists($classPath)){
             require $classPath;
         }

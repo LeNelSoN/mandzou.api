@@ -20,7 +20,7 @@ class Initializer
     private static function writeTableFile(bool $isForce = false): array
     {
         $tables = DatabaseService::getTables();
-        $tableFile = "src/schemas/Table.php";
+        $tableFile = $_ENV['config']->db->root."schemas/Table.php";
         foreach ($tables as $key => $value) {
             $tables[$key] = "\t" . 'CONST ' . strtoupper($value) . ' = ' . "'" . $value . "'" . ';' . "\n";
         }
