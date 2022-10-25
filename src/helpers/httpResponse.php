@@ -25,7 +25,7 @@ class HttpResponse
      */
     public static function exit(int $status = 404): void
     {
-        $message = 'Il semblerait qu\'il est un probleme, reessayait plus tard !!';
+        $message = 'Il semblerait qu\'il est un problème, réessayait plus tard !!';
         echo json_encode($message);
         die;
     }

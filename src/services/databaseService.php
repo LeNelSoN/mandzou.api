@@ -74,5 +74,4 @@ $e->getMessage()");
         $rows = $resp->statment->fetchAll(PDO::FETCH_CLASS);
         return $rows;
     }
-
 }
