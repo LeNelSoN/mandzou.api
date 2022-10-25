@@ -22,14 +22,19 @@ class Initializer
     private static function writeTableFile(bool $isForce = false): array
     {
         $tables = DatabaseService::getTables();
-        $tableFile = "src/schemas/Table.php";
+        $tableFile = $_ENV['config']->db->root."schemas/Table.php";
+        foreach ($tables as $key => $value) {
+            $tables[$key] = "\t" . 'CONST ' . strtoupper($value) . ' = ' . "'" . $value . "'" . ';' . "\n";
+        }
+        array_unshift($tables, "<?php namespace Schemas;\n\nclass Table{\n\n");
+        array_push($tables, "\n}");
 
         if (file_exists($tableFile) && $isForce) {
             //???
             //Supprimer le fichier s’il existe
             if (!unlink($tableFile)) {
                 //Si la suppression ne fonctionne pas déclenche une Exception 
-                throw new ErrorException($tableFile);
+                throw new Exception($tableFile);
             }
         }
         if (!file_exists($tableFile)) {
@@ -44,7 +49,7 @@ class Initializer
             $fileContent .= "}";
             if (!file_put_contents($tableFile, $fileContent)) {
                 //Si l'écriture ne fonctionne pas déclenche une Exception 
-                throw new ErrorException($tableFile);
+                throw new Exception($tableFile);
             }
             return $tables;
         }
