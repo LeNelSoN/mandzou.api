@@ -1,8 +1,9 @@
 {
     "db": {
+        "root":"src/",
         "host": "localhost",
         "port": "3306",
-        "dbName": "db_blog",
+        "dbName": "mandzou.db",
         "user": "root",
         "pass": ""
     }
