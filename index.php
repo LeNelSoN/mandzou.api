@@ -23,6 +23,18 @@ Autoload::register();
 
 
 
+
+if (
+    $_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] ==
+    'init'
+) {
+    if (Initializer::start($request)) {
+        HttpResponse::send(["message" => "Api Initialized"]);
+    }
+    HttpResponse::send(["message" => "Api Not Initialized, try again ..."]);
+}
+
+
 $request = HttpRequest::instance();
 
 if (

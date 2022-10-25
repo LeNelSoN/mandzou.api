@@ -1,9 +1,12 @@
-<?php 
-class Autoload{
+<?php
+class Autoload
+{
 
-    static function register(){
+    static function register()
+    {
         spl_autoload_register(array(__CLASS__, 'autoloader'));
     }
+
 
     static function autoloader($class){
         $classPath = 'src/'.$class.'.php';

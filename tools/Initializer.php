@@ -2,6 +2,7 @@
 
 namespace Tools;
 
+
 use Services\DatabaseService;
 use Helpers\HttpRequest;
 use Exception;
@@ -17,27 +18,37 @@ class Initializer
      * Si $isForce vaut false et que la classe existe déjà, elle n'est pas réécrite
      * Si $isForce vaut true, la classe est supprimée (si elle existe) et réécrite
      */
+
     private static function writeTableFile(bool $isForce = false): array
     {
         $tables = DatabaseService::getTables();
         $tableFile = "src/schemas/Table.php";
-        foreach ($tables as $key => $value) {
-            $tables[$key] = "\t" . 'CONST ' . strtoupper($value) . ' = ' . "'" . $value . "'" . ';' . "\n";
-        }
-        array_unshift($tables, "<?php namespace Schemas;\n\nclass Table{\n\n");
-        array_push($tables, "\n}");
 
         if (file_exists($tableFile) && $isForce) {
+            //???
+            //Supprimer le fichier s’il existe
             if (!unlink($tableFile)) {
-                throw new Exception("Impossible de supprimer le fichier");
+                //Si la suppression ne fonctionne pas déclenche une Exception 
+                throw new ErrorException($tableFile);
             }
         }
         if (!file_exists($tableFile)) {
-            if (!file_put_contents($tableFile, $tables)) {
-                throw new Exception("Impossible d'écrire le fichier");
-            };
+            //???
+            //Créer le fichier (voir exemple ci dessous)
+            $fileContent = "<?php namespace Schemas; \r\n\r\n ";
+            $fileContent .= "class Table{ \r\n\r\n";
+            foreach ($tables as $table) {
+                $const =  strtoupper($table);
+                $fileContent .= "const $const = '$table'; \r\n";
+            }
+            $fileContent .= "}";
+            if (!file_put_contents($tableFile, $fileContent)) {
+                //Si l'écriture ne fonctionne pas déclenche une Exception 
+                throw new ErrorException($tableFile);
+            }
+            return $tables;
         }
-        return $tables;
+
     }
     /**
      * Exécute la méthode writeTableFile
@@ -47,7 +58,9 @@ class Initializer
     {
         $isForce = count($request->route) > 1 && $request->route[1] == 'force';
         try {
-            Self::writeTableFile($isForce);
+
+            self::writeTableFile($isForce); //when the function is inside "SELF"
+
         } catch (Exception $e) {
             return false;
         }
