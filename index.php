@@ -4,6 +4,7 @@ use Controllers\DatabaseController;
 use Helpers\HttpRequest;
 use Helpers\HttpResponse;
 use Services\DatabaseService;
+use Tools\Initializer;
 
 $_ENV["current"] = "dev";
 $config = file_get_contents("src/configs/" . $_ENV["current"] . ".config.json");
@@ -19,6 +20,19 @@ header("Access-Control-Allow-Origin: $origin");
 
 require_once 'autoload.php';
 Autoload::register();
+
+
+
+if (
+    $_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] ==
+    'init'
+) {
+    if (Initializer::start($request)) {
+        HttpResponse::send(["message" => "Api Initialized"]);
+    }
+    HttpResponse::send(["message" => "Api Not Initialized, try again ..."]);
+}
+
 
 $request = HttpRequest::instance();
 $tables = DatabaseService::getTables();
