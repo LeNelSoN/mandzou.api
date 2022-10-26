@@ -19,7 +19,9 @@ public function __construct(HttpRequest $request)
 */
 public function execute() : ?array
 {
-
+    if($this->action == "GET"){
+        return $this->get();
+    }
 }
 /**
 * Action exécutée lors d'un GET
@@ -29,7 +31,12 @@ public function execute() : ?array
 */
 private function get() : ?array
 {
-/* ??? */
+    $dbs = new DatabaseService($this->table);
+    if ($this->id == "0") {
+        return $dbs->selectWhere();
+    }
+    return $dbs->selectWhere($this->pk, [$this->id]);
 }
 }
+
     
