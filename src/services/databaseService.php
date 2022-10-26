@@ -77,12 +77,12 @@ $e->getMessage()");
     /**
      * Retourne la liste des colonnes d'une table (son schéma)
      */
-    public function getSchema()
+    public function getSchema() : array
     {
         $schemas = [];
         $sql = "SHOW FULL COLUMNS FROM $this->table";
         $resp = $this->query($sql);
-        $schemas = $resp->statment->fetchAll(PDO::FETCH_CLASS);
+        $schemas = $resp->statment->fetchAll(PDO::FETCH_ASSOC);
         return $schemas;
     }
 }

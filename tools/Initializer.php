@@ -61,9 +61,9 @@ class Initializer
                 $writing = "<?php namespace Schemas;\n\nclass ".ucfirst($table)."{\n\n\tconst COLUMNS = [\n\t\t";
                 $prefix = "";
                 foreach ($schema as $column) {
-                    $writing .= $prefix."'".$column->Field."' => ['type' => '".$column->Type."', 'nullable' => ";
-                    $nullable = $column->Null == 'NO' ? "'0'" : "'1'";
-                    $writing .= $nullable." , 'default' => '".$column->Default."']";
+                    $writing .= $prefix."'".$column["Field"]."' => ['type' => '".$column["Type"]."', 'nullable' => ";
+                    $nullable = $column["Null"] == 'NO' ? "'0'" : "'1'";
+                    $writing .= $nullable." , 'default' => '".$column["Default"]."']";
                     $prefix = ",\n\t\t";
                 }
                 $writing .= "\n\t];\n\r\n}"; 
@@ -73,6 +73,9 @@ class Initializer
             }
         }
     }
+    /**
+     * Permet de supprimer tout les schemas et purger le dossier
+     */
     private static function cleanSchemasDir(){
         $dir = $_ENV['config']->db->root."Schemas";
         $scan = scandir($dir);
