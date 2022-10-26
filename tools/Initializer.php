@@ -2,7 +2,7 @@
 
 namespace Tools;
 
-
+use ErrorException;
 use Services\DatabaseService;
 use Helpers\HttpRequest;
 use Exception;
@@ -66,4 +66,29 @@ class Initializer
         }
         return true;
     }
+
+    /**
+* Génère une classe schema (crée le fichier) pour chaque table présente dans $tables
+* décrivant la structure de la table à l'aide de DatabaseService getSchema()
+* Si $isForce vaut false et que la classe existe déjà, elle n'est pas réécrite
+* Si $isForce vaut true, la classe est supprimée (si elle existe) et réécrite
+*/
+private static function writeSchemasFiles(array $tables, bool $isForce) : void
+{
+foreach($tables as $table){
+$className = ucfirst($table);
+$schemaFile = "src/Schemas/$className.php";
+if(file_exists($schemaFile) && $isForce){
+//???
+//Supprimer le fichier s’il existe
+//Si la suppression ne fonctionne pas déclenche une Exception
+}
+if(!file_exists($schemaFile)){
+//???
+//Créer le fichier (voir exemple ci dessous)
+//Si l’écriture ne fonctionne pas déclenche une Exception
+}
+}
+}
+
 }

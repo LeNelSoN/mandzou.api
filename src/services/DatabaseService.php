@@ -75,4 +75,14 @@ $e->getMessage()");
         return $rows;
     }
 
+    /**
+* Retourne la liste des colonnes d'une table (son schéma)
+*/
+public function getSchema(){
+    $schemas = [];
+    $sql = "SHOW FULL COLUMNS FROM $this->table";
+    // ???
+    return $schemas;
+    }
+
 }

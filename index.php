@@ -21,9 +21,6 @@ header("Access-Control-Allow-Origin: $origin");
 require_once 'autoload.php';
 Autoload::register();
 
-
-
-
 if (
     $_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] ==
     'init'
