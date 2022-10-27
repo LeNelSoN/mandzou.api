@@ -8,7 +8,7 @@ class Customer{
 		'last_name' => ['type' => 'varchar(255)', 'nullable' => '1' , 'default' => ''],
 		'address' => ['type' => 'text', 'nullable' => '1' , 'default' => ''],
 		'is_admin' => ['type' => 'tinyint(1)', 'nullable' => '1' , 'default' => ''],
-		'is_deleted' => ['type' => 'tinyint(1)', 'nullable' => '1' , 'default' => ''],
+		'is_deleted' => ['type' => 'tinyint(1)', 'nullable' => '0' , 'default' => ''],
 		'Id_Appuser' => ['type' => 'varchar(255)', 'nullable' => '1' , 'default' => '']
 	];
 

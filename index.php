@@ -3,6 +3,8 @@
 use Controllers\DatabaseController;
 use Helpers\HttpRequest;
 use Helpers\HttpResponse;
+use Models\Model;
+use Models\ModelList;
 use Services\DatabaseService;
 use Tools\Initializer;
 
@@ -21,22 +23,16 @@ header("Access-Control-Allow-Origin: $origin");
 require_once 'autoload.php';
 Autoload::register();
 
-
-
 $request = HttpRequest::instance();
 $tables = DatabaseService::getTables();
 
-if (
-    $_ENV['current'] == 'dev' && !empty($request->route) && $request->route[0] ==
-    'init'
-    ) {
+if ($_ENV['current'] == 'dev' && !empty($request->route) && $request->route[0] =='init') {
         if (Initializer::start($request, $tables)) {
             HttpResponse::send(["message" => "Api Initialized"]);
         }
         HttpResponse::send(["message" => "Api Not Initialized, try again ..."]);
     }
     
-
 if (empty($request->route) || !in_array($request->route[0], $tables)) {
     HttpResponse::exit();
 }

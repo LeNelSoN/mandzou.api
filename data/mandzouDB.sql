@@ -2,14 +2,15 @@ CREATE TABLE Category(
    Id_Category VARCHAR(255),
    title VARCHAR(255),
    description TEXT,
-   is_deleted BOOLEAN,
+   is_deleted BOOLEAN NOT NULL,
    PRIMARY KEY(Id_Category)
 );
 
 CREATE TABLE Appuser(
    Id_Appuser VARCHAR(255),
-   login VARCHAR(255),
-   password VARCHAR(50),
+   login VARCHAR(255) NOT NULL,
+   password VARCHAR(50) NOT NULL,
+   is_deleted BOOLEAN NOT NULL,
    PRIMARY KEY(Id_Appuser)
 );
 
@@ -19,7 +20,7 @@ CREATE TABLE Customer(
    last_name VARCHAR(255),
    address TEXT,
    is_admin BOOLEAN,
-   is_deleted BOOLEAN,
+   is_deleted BOOLEAN NOT NULL,
    Id_Appuser VARCHAR(255),
    PRIMARY KEY(Id_Customer),
    UNIQUE(Id_Appuser),
@@ -28,6 +29,7 @@ CREATE TABLE Customer(
 
 CREATE TABLE Cart(
    Id_Cart VARCHAR(255),
+   is_deleted BOOLEAN NOT NULL,
    Id_Customer VARCHAR(255),
    PRIMARY KEY(Id_Cart),
    FOREIGN KEY(Id_Customer) REFERENCES Customer(Id_Customer)
@@ -40,7 +42,7 @@ CREATE TABLE Product(
    description_en VARCHAR(50),
    description_fr TEXT,
    price DECIMAL(15,2),
-   is_deleted BOOLEAN,
+   is_deleted BOOLEAN NOT NULL,
    Id_Cart VARCHAR(255),
    Id_Category VARCHAR(255),
    PRIMARY KEY(Id_Product),
@@ -52,7 +54,7 @@ CREATE TABLE Picture(
    Id_Picture VARCHAR(255),
    url TEXT,
    alt VARCHAR(255),
-   is_deleted BOOLEAN,
+   is_deleted BOOLEAN NOT NULL,
    Id_Product VARCHAR(255),
    PRIMARY KEY(Id_Picture),
    FOREIGN KEY(Id_Product) REFERENCES Product(Id_Product)
