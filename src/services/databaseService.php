@@ -74,4 +74,13 @@ $e->getMessage()");
         $rows = $resp->statment->fetchAll(PDO::FETCH_CLASS);
         return $rows;
     }
+
+    public function getSchema(){
+        $schemas = [];
+        $sql = "SHOW FULL COLUMNS FROM $this->table";
+        $resp = $this->query($sql);
+        $schemas = $resp->statment->fetchAll(PDO::FETCH_CLASS);
+        return $schemas;
+
+    }
 }
