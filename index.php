@@ -22,8 +22,7 @@ require_once 'autoload.php';
 Autoload::register();
 
 if (
-    $_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] ==
-    'init'
+    $_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] == 'init'
 ) {
     if (Initializer::start($request)) {
         HttpResponse::send(["message" => "Api Initialized"]);

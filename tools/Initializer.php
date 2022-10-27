@@ -2,6 +2,7 @@
 
 namespace Tools;
 
+use Error;
 use ErrorException;
 use Services\DatabaseService;
 use Helpers\HttpRequest;
@@ -82,12 +83,21 @@ if(file_exists($schemaFile) && $isForce){
 //???
 //Supprimer le fichier s’il existe
 //Si la suppression ne fonctionne pas déclenche une Exception
+if(!unlink($schemaFile)){
+    throw new ErrorException($schemaFile);
 }
-if(!file_exists($schemaFile)){
-//???
-//Créer le fichier (voir exemple ci dessous)
-//Si l’écriture ne fonctionne pas déclenche une Exception
 }
+$fileContent = "<?php namespace Schemas; \r\n\r\n ";
+            $fileContent .= "class Table{ \r\n\r\n";
+            foreach ($tables as $table) {
+                $const =  strtoupper($table);
+                $fileContent .= "const $const = '$table'; \r\n";
+            }
+            $fileContent .= "}";
+            if (!file_put_contents($schemaFile, $fileContent)) {
+                //Si l'écriture ne fonctionne pas déclenche une Exception 
+                throw new ErrorException($schemaFile);
+            }
 }
 }
 
